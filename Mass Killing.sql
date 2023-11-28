@@ -1,18 +1,11 @@
                  -- NOTE - COMMENTS ARE ON THE RIGHT HAND SIDE AND ARE DENOTED BY " -- "
 
-                                                            -- Tables Selection
-
-SELECT * FROM incidents_public
-SELECT * FROM offenders_public
-SELECT * FROM victims_public
-SELECT * FROM weapons_public
-
-
+                                                                                 
 
                      --  ** Data Cleaning **
 
-                                                            -- "incidents_public" table
-                                                            -- Checking Duplicates for "incidents_public" table
+                                                                                   -- "incidents_public" table
+                                                                                   -- Checking Duplicates for "incidents_public" table
 
 WITH incidentspublic AS
   (SELECT *,
@@ -25,7 +18,7 @@ FROM incidentspublic
 WHERE duplicates > 1
 
 
-                                                                  --  Trimming for "incidents_public" table
+                                                                                  --  Trimming for "incidents_public" table
 
 update  incidents_public
 SET city = trim(city)
@@ -61,8 +54,8 @@ SET narrative =  trim(narrative)
 
 
 
-                                                           -- "offenders_public" table
-                                                           -- Checking Duplicates for "offenders_public" table
+                                                                                       -- "offenders_public" table
+                                                                                       -- Checking Duplicates for "offenders_public" table
 
 WITH offenderspublic AS
   (SELECT *,
@@ -75,7 +68,7 @@ FROM offenderspublic
 WHERE duplicates > 1
 
 
-                                                                --  Trimming for "offenders_public" table
+                                                                                      --  Trimming for "offenders_public" table
 
 update offenders_public
 SET firstname = trim(firstname)
@@ -103,7 +96,7 @@ SET sentence_details = trim(sentence_details)
 
 
 
-                        -- Retrieving characters before "-" Hypen and putting them in "middlename" column "offenders_public" table
+                                                 -- Retrieving characters before "-" Hypen and putting them in "middlename" column "offenders_public" table
 
 update offenders_public
 SET middlename = 
@@ -112,7 +105,7 @@ SET middlename =
                 END from offenders_public
 
 
-                          -- Deleting characters before "-" Hypen for "lastname" column "offenders_public" table
+                                                -- Deleting characters before "-" Hypen for "lastname" column "offenders_public" table
 
 update offenders_public
 SET lastname = 
@@ -138,8 +131,8 @@ WHERE firstname is null
 
 
 
-                                                                      --  "victims_public" table
-                                                                      -- Checking duplicates for "victims_public" table
+                                                                                    --  "victims_public" table
+                                                                                    -- Checking duplicates for "victims_public" table
 
 WITH victimspublic AS
   (SELECT *,
@@ -152,14 +145,14 @@ FROM victimspublic
 WHERE duplicates > 1
 
 
-alter table victims_public                                                --  Modifying victim_id column to not null
+alter table victims_public                                                         --  Modifying victim_id column to not null
 alter column victim_id int not null
 
-ALTER TABLE victims_public                                                -- Adding "primary key" to "victim_id" column
+ALTER TABLE victims_public                                                         -- Adding "primary key" to "victim_id" column
 ADD CONSTRAINT victim_id PRIMARY KEY (victim_id);
 
 
-                                                                          -- Trimming "victims_public" table
+                                                                                   -- Trimming "victims_public" table
 
 update victims_public
 SET race = trim(race)
@@ -174,8 +167,8 @@ SET vorelationship = trim(vorelationship)
 
 
 
-                                                                 -- "weapons_public" table
-                                                                 -- Checking duplicates for "weapons_public" table
+                                                                                   -- "weapons_public" table
+                                                                                   -- Checking duplicates for "weapons_public" table
  
 WITH weaponspublic AS
   (SELECT *,
@@ -188,14 +181,14 @@ FROM weaponspublic
 WHERE duplicates > 1
 
 
-alter table weapons_public                                          --  Modifying weapon_id column to not null
+alter table weapons_public                                                       --  Modifying weapon_id column to not null
 alter column weapon_id int not null
 
-ALTER TABLE weapons_public                                          --  Adding "primary key" to "weapon_id" column
+ALTER TABLE weapons_public                                                       --  Adding "primary key" to "weapon_id" column
 ADD CONSTRAINT weapon_id PRIMARY KEY (weapon_id);
 
 
-                                                                    -- Trimming "weapons_public" table
+                                                                                 -- Trimming "weapons_public" table
 
 update weapons_public
 SET weapon_type = trim(weapon_type)
@@ -208,7 +201,7 @@ SET gun_type = trim(gun_type)
 
 
 
-                                                            -- Capitalizing starting word for "gun_type" column
+                                                                                -- Capitalizing starting word for "gun_type" column
 
 update weapons_public
 SET gun_type = 
@@ -216,7 +209,7 @@ SET gun_type =
               FROM weapons_public;
 
 
-                                                           -- Capitalizing starting word for "weapon_type" column 
+                                                                                -- Capitalizing starting word for "weapon_type" column 
 
 update weapons_public
 SET weapon_type = 			
@@ -230,18 +223,18 @@ SET weapon_type =
 
 --                 ** Answering Questions 
 
-                                                                                  -- Total Incidents
+                                                                                -- Total Incidents
 SELECT count(incident_id) as total_incidents
 FROM incidents_public
 
-                                                                                 -- Selecting Top 5  states
+                                                                                -- Selecting Top 5  states
 SELECT top 5 state, count(incident_id) AS no_of_incidents
 FROM incidents_public
 GROUP BY state
 ORDER BY no_of_incidents DESC
    
 
-                                                                              -- Selecting Top 10 Cities in Top 5  states
+                                                                                -- Selecting Top 10 Cities in Top 5  states
 
 SELECT top 10 city,
            count(incident_id) AS no_of_incidents,
@@ -354,7 +347,7 @@ GROUP BY datepart(YEAR, date)
 
 
 
-                                                            -- How many offenders were assembled for each incident and in which city
+                                                                               -- How many offenders were assembled for each incident and in which city
 WITH cte AS
   (SELECT op.incident_id,
           op.offender_id,
@@ -382,7 +375,7 @@ ORDER BY overall_count DESC
 
 
 
-                                                                                  -- Percentage Of sentences to offenders
+                                                                                -- Percentage Of sentences to offenders
 WITH cte AS
   (SELECT sentence_type,
           cast(count(sentence_type) AS float) AS numbers
@@ -400,7 +393,7 @@ ORDER BY criminal_percentage DESC
 
 
 
-                                                                      -- How many victims were targeted in particular state
+                                                                               -- How many victims were targeted in particular state
 SELECT ip.state,
        count(vp.sex) AS victims,
        count(CASE WHEN vp.sex = 'Male' THEN 1   END) AS male,
@@ -413,8 +406,11 @@ ORDER BY victims DESC
 
 
 
-                                                                          -- How many weapons were being used in incidents
+                                                                               -- How many weapons were being used in incidents
 select weapon_type as weapons, count(weapon_type) as numbers
 from weapons_public
 group by weapon_type
 order by numbers desc
+
+
+                                        -- ** end **
