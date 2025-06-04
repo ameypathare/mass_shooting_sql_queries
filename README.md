@@ -1,6 +1,6 @@
 ## mass_shooting_sql_queries
 
-$${\color{lightgreen}Overview \space Of \space Code:}$$
+$${Overview \space Of \space Code:}$$
 <br>
 
 <li> Cleaned the CSV file using these functions:
@@ -17,7 +17,7 @@ $${\color{lightgreen}Overview \space Of \space Code:}$$
 
 <li>Answered the sql queries to get meaningful insights in POWER BI</li> 
     <ul type = "circle">
-    ${\color{red}Window \space function \space used:}$
+    ${Window \space function \space used:}$
      <li>CTE()</li>
      <li>DENSE_RANK()</li>
       <li>ROW_NUMBER()</li>
@@ -25,31 +25,31 @@ $${\color{lightgreen}Overview \space Of \space Code:}$$
   <br>
   
    <ul type = "circle">
- ${\color{red}Aggregrate \space function \space used}$
+ ${Aggregrate \space function \space used}$
    <li>SUM()</li>
    <li>COUNT()</li>
    </ul>
 <br>
 
  <ul type = "circle">
-  ${\color{red}Date \space functions \space used}$
+  ${Date \space functions \space used}$
    <li>DATEPART</li>
    </ul>
   <br>
 
   <ul type = "circle">
-  ${\color{red}Join \space used}$
+  ${Join \space used}$
    <li>INNER JOIN</li>
    </ul>
   <br>
 
    <ul type = "circle">
-  ${\color{red}Conditional \space Expression \space used}$
+  ${Conditional \space Expression \space used}$
    <li>CASE WHEN</li>
    </ul>
   <br>
   
   <ul type = "circle">
-  ${\color{red}To \space filter \space conditions}$
+  ${To \space filter \space conditions}$
    <li>WHERE</li>
   </ul>
